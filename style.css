@@ -3,17 +3,19 @@
 
 /* --- CSS Variables (Color Palette & Fonts) --- */
 :root {
-    --primary-color: #3498db; /* A nice, modern blue */
-    --secondary-color: #2ecc71; /* A vibrant green for accents/CTA */
-    --dark-color: #2c3e50;    /* Dark blue/grey for text */
-    --light-color: #ecf0f1;   /* Light grey for backgrounds */
-    --white-color: #ffffff;
-    --grey-color: #bdc3c7;    /* A softer grey */
+    --primary-dark: #1a1a1a; /* Very dark grey, almost black */
+    --primary-orange: #e67e22; /* Strong dark orange */
+    --accent-orange-light: #f39c12; /* A slightly lighter orange for highlights */
+    --text-light: #f5f5f5;   /* Light grey/off-white for text on dark backgrounds */
+    --text-dark: #333333;    /* For text on light backgrounds */
+    --border-grey: #444444; /* Darker grey for borders on dark bg */
+    --background-light: #ffffff; /* White background for contrast */
 
     --font-primary: 'Montserrat', sans-serif;
     --font-secondary: 'Open Sans', sans-serif;
 
-    --header-height: 70px; /* Define header height for offsets */
+    --header-height: 70px;
+    --transition-speed: 0.4s; /* Consistent transition speed */
 }
 
 /* --- Basic Reset & Body Styling --- */
@@ -27,24 +29,24 @@
 body {
     font-family: var(--font-secondary);
     line-height: 1.7;
-    color: var(--dark-color);
-    background-color: var(--light-color);
-    overflow-x: hidden; /* Prevent horizontal scrollbars from animations */
+    color: var(--text-dark);
+    background-color: var(--background-light);
+    overflow-x: hidden;
 }
 
 /* --- Header & Navigation --- */
 header {
-    background: var(--dark-color);
-    color: var(--white-color);
-    padding: 0 20px; /* Reduced vertical padding */
+    background: var(--primary-dark);
+    color: var(--text-light);
     height: var(--header-height);
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    display: flex; /* Use flex for vertical alignment */
-    align-items: center; /* Vertically center nav content */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
 }
 
 nav {
@@ -60,30 +62,31 @@ nav .logo {
     font-family: var(--font-primary);
     font-size: 1.6rem;
     font-weight: 700;
-    color: var(--primary-color); /* Logo with primary color */
+    color: var(--primary-orange);
 }
 
 nav ul {
     list-style: none;
     display: flex;
+    align-items: center; /* Vertically align items */
 }
 
 nav ul li {
-    margin-left: 25px; /* Increased spacing */
+    margin-left: 25px;
 }
 
 nav ul li a {
-    color: var(--light-color); /* Lighter text for contrast */
-    text-decoration: none;
+    color: var(--text-light);
     font-family: var(--font-primary);
     font-weight: 500;
     padding: 8px 12px;
     border-radius: 4px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    position: relative; /* For underline effect */
+    transition: color var(--transition-speed) ease, background-color var(--transition-speed) ease;
+    position: relative;
+    text-decoration: none;
 }
 
-nav ul li a::after { /* Underline effect */
+nav ul li a::after {
     content: '';
     position: absolute;
     width: 0;
@@ -91,76 +94,96 @@ nav ul li a::after { /* Underline effect */
     bottom: -2px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: var(--primary-color);
-    transition: width 0.3s ease;
+    background-color: var(--primary-orange);
+    transition: width var(--transition-speed) ease;
 }
 
 nav ul li a:hover::after,
 nav ul li a.active::after {
-    width: 70%; /* Active/hover underline width */
+    width: 70%;
 }
 
 nav ul li a:hover,
 nav ul li a.active {
-    color: var(--white-color); /* Brighter on hover/active */
+    color: var(--primary-orange);
 }
 
 nav ul li a.resume-button {
-    background-color: var(--primary-color);
-    color: var(--white-color);
-    border: 2px solid var(--primary-color);
+    background-color: var(--primary-orange);
+    color: var(--primary-dark); /* Dark text on orange button */
+    border: 2px solid var(--primary-orange);
+    font-weight: bold;
+    padding: 6px 15px; /* Adjust padding if needed */
 }
 nav ul li a.resume-button:hover {
-    background-color: var(--white-color);
-    color: var(--primary-color);
+    background-color: var(--primary-dark);
+    color: var(--primary-orange);
+    border-color: var(--primary-orange);
 }
-
 
 /* --- Main Content & Sections --- */
 main {
-    padding-top: var(--header-height); /* Offset for fixed header */
+    padding-top: var(--header-height);
 }
 
 section {
     padding: 80px 20px;
     max-width: 1000px;
-    margin: 0 auto; /* Center sections */
-    /* Base styles for scroll animation */
+    margin: 0 auto;
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.8s ease-out;
+    transform: translateY(40px);
+    transition: opacity calc(var(--transition-speed) * 1.5) ease-out, transform calc(var(--transition-speed) * 2) ease-out;
 }
-section.visible { /* Class added by JS when section is in view */
+section.visible {
     opacity: 1;
     transform: translateY(0);
 }
 
-section:nth-child(even) { /* Alternate section backgrounds */
-    background-color: var(--white-color);
+section:nth-child(even) { /* Even sections will have dark background */
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+}
+section:nth-child(even) h2,
+section:nth-child(even) h3,
+section:nth-child(even) h4 {
+    color: var(--text-light);
+}
+section:nth-child(even) .project-card,
+section:nth-child(even) .experience-item,
+section:nth-child(even) .publication-item,
+section:nth-child(even) .skill-category-box, /* Skill category box */
+section:nth-child(even) .leadership-item {
+    background-color: #2c2c2c; /* Slightly lighter than primary-dark for cards */
+    color: var(--text-light);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+section:nth-child(even) .project-card h3,
+section:nth-child(even) .skill-category-box h3,
+section:nth-child(even) .leadership-item h4 {
+    color: var(--primary-orange);
+}
+section:nth-child(even) a:not(.resume-button):not(.hero-links a):not(.project-link) {
+    color: var(--accent-orange-light);
+}
+section:nth-child(even) a:hover:not(.resume-button):not(.hero-links a):not(.project-link) {
+    color: var(--primary-orange);
 }
 
 
 h1, h2, h3, h4 {
     font-family: var(--font-primary);
     font-weight: 700;
-    color: var(--dark-color);
-}
-
-h1 {
-    font-size: 3rem;
-    margin-bottom: 15px;
-    line-height: 1.2;
 }
 
 h2 {
     font-size: 2.5rem;
     margin-bottom: 40px;
     text-align: center;
-    color: var(--primary-color); /* Section titles with primary color */
+    color: var(--primary-dark);
     position: relative;
     padding-bottom: 10px;
 }
-h2::after { /* Underline for section titles */
+h2::after {
     content: '';
     position: absolute;
     width: 60px;
@@ -168,67 +191,69 @@ h2::after { /* Underline for section titles */
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    background-color: var(--secondary-color);
+    background-color: var(--primary-orange);
 }
-
-h3 {
-    font-size: 1.8rem;
-    color: var(--dark-color);
-    margin-bottom: 15px;
+section:nth-child(even) h2 {
+    color: var(--text-light);
+}
+section:nth-child(even) h2::after {
+    background-color: var(--primary-orange);
 }
 
 /* --- Hero Section --- */
 #hero {
-    background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.85)), url('https://via.placeholder.com/1920x1080.png?text=Bioinformatics+Background') no-repeat center center/cover; /* Replace with a real background image! */
-    color: var(--white-color);
+    background: var(--primary-dark);
+    color: var(--text-light);
     min-height: calc(100vh - var(--header-height));
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 20px; /* Ensure padding inside */
-    margin: 0; /* Remove default section margin if any */
-    max-width: none; /* Hero spans full width */
+    padding: 20px;
+    margin: 0;
+    max-width: none;
+    opacity: 1; /* Hero is always visible */
+    transform: translateY(0); /* No initial transform */
 }
 #hero h1 {
-    color: var(--white-color);
+    color: var(--text-light);
     font-size: 3.5rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
 .hero-content .tagline {
     font-size: 1.5rem;
     font-family: var(--font-secondary);
-    font-weight: 400;
-    color: var(--light-color);
+    color: var(--accent-orange-light);
     margin-bottom: 25px;
 }
-.hero-content > p:not(.tagline) { /* The description paragraph */
+.hero-content > p:not(.tagline) {
     font-size: 1.1rem;
     max-width: 700px;
     margin-bottom: 30px;
-    color: var(--grey-color);
+    color: #ccc; /* Slightly lighter than text-light for subtlety */
 }
 .hero-links a {
     display: inline-block;
     margin: 10px;
     padding: 12px 25px;
-    background: var(--primary-color);
-    color: white;
+    background: var(--primary-orange);
+    color: var(--primary-dark);
+    font-weight: bold;
     text-decoration: none;
     border-radius: 5px;
     font-family: var(--font-primary);
-    font-weight: 500;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    border: 2px solid var(--primary-color);
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, transform 0.2s ease;
+    border: 2px solid var(--primary-orange);
 }
 .hero-links a:hover {
-    background: var(--white-color);
-    color: var(--primary-color);
-    transform: translateY(-3px);
+    background: var(--primary-dark);
+    color: var(--primary-orange);
+    border-color: var(--primary-orange);
+    transform: translateY(-3px) scale(1.05);
 }
 
-
-/* --- About Section --- */
+/* About Section */
 #about .about-content {
     display: flex;
     align-items: center;
@@ -239,7 +264,7 @@ h3 {
     height: 200px;
     border-radius: 50%;
     object-fit: cover;
-    border: 5px solid var(--primary-color);
+    border: 5px solid var(--primary-orange);
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 #about .about-text p {
@@ -247,24 +272,27 @@ h3 {
     font-size: 1.05rem;
 }
 
-/* --- Experience Section --- */
+/* Experience Section */
 .experience-item {
-    background: var(--white-color); /* Ensure contrast if section has light bg */
+    background: var(--background-light);
     padding: 25px;
     margin-bottom: 25px;
     border-radius: 8px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    border-left: 5px solid var(--secondary-color); /* Accent border */
+    border-left: 5px solid var(--primary-orange);
 }
 .experience-item .sub-heading {
     font-family: var(--font-primary);
     font-weight: 500;
-    color: var(--dark-color);
+    color: var(--text-dark); /* Default for light bg */
     margin-bottom: 10px;
     font-size: 1.1rem;
 }
+section:nth-child(even) .experience-item .sub-heading {
+    color: var(--text-light); /* For dark bg */
+}
 .experience-item ul {
-    list-style: none; /* Remove default bullets */
+    list-style: none;
     padding-left: 0;
 }
 .experience-item ul li {
@@ -272,42 +300,43 @@ h3 {
     position: relative;
     margin-bottom: 8px;
 }
-.experience-item ul li::before { /* Custom bullet */
-    content: '›'; /* Or '•', '✓' etc. */
+.experience-item ul li::before {
+    content: '›';
     position: absolute;
     left: 0;
-    color: var(--primary-color);
+    color: var(--primary-orange);
     font-weight: bold;
     font-size: 1.2em;
     line-height: 1;
 }
 
-/* --- Projects Section --- */
+/* Projects Section */
 .project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 30px;
 }
-
 .project-card {
-    background: var(--white-color);
+    background: var(--background-light);
     border-radius: 8px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.07);
-    overflow: hidden; /* For image if added */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    overflow: hidden;
     display: flex;
-    flex-direction: column; /* Ensure footer is at bottom */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex-direction: column;
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, border-top-color var(--transition-speed) ease;
+    border-top: 4px solid transparent;
 }
 .project-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 10px 25px rgba(44, 62, 80, 0.15);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    border-top-color: var(--primary-orange);
 }
-.project-card-content { /* New div to wrap text content for padding */
+.project-card-content {
     padding: 25px;
-    flex-grow: 1; /* Allow content to grow */
+    flex-grow: 1;
 }
 .project-card h3 {
-    color: var(--primary-color);
+    color: var(--primary-dark);
     margin-bottom: 10px;
     font-size: 1.4rem;
 }
@@ -317,78 +346,144 @@ h3 {
     margin-bottom: 15px;
     font-family: var(--font-secondary);
 }
+section:nth-child(even) .project-card .project-date {
+    color: #aaa;
+}
 .project-card p:not(.project-date) {
     margin-bottom: 15px;
     font-size: 0.95rem;
 }
 .project-card .project-link {
     display: inline-block;
-    margin-top: auto; /* Push to bottom if card content varies */
-    padding: 10px 15px; /* Added to make it look like a button */
-    background-color: var(--secondary-color);
-    color: var(--white-color);
+    margin-top: auto;
+    padding: 10px 15px;
+    background-color: var(--primary-orange);
+    color: var(--primary-dark);
     text-decoration: none;
     font-weight: 500;
     font-family: var(--font-primary);
     border-radius: 4px;
-    transition: background-color 0.3s ease;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 .project-card .project-link:hover {
-    background-color: #27ae60; /* Darker shade of secondary */
+    background-color: var(--accent-orange-light);
+    color: var(--primary-dark);
 }
+/* No need for specific :nth-child(even) for project-link as it's already general */
 
 
-/* --- Publications Section --- */
+/* Publications Section */
 .publication-item {
-    background: var(--white-color);
+    background: var(--background-light);
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 8px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-    border-left: 4px solid var(--primary-color);
+    border-left: 4px solid var(--primary-orange);
 }
 .publication-item p {
     font-size: 1rem;
 }
 
-/* --- Skills Section --- */
-.skills-content {
+/* --- Tabs Styling --- */
+.tabs-container {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 2px solid var(--border-grey);
+}
+section:nth-child(odd) .tabs-container { /* section:nth-child(even) in main is dark */
+    border-bottom-color: #555;
+}
+section:nth-child(even) .tabs-container { /* section:nth-child(odd) in main is light */
+    border-bottom-color: var(--border-grey);
+}
+
+
+.tab-button {
+    padding: 10px 20px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: var(--font-primary);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-dark); /* Default for light bg */
+    transition: color var(--transition-speed) ease, border-bottom-color var(--transition-speed) ease;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+}
+section:nth-child(even) .tab-button { /* For dark sections */
+    color: var(--text-light);
+}
+
+.tab-button.active {
+    color: var(--primary-orange);
+    border-bottom-color: var(--primary-orange);
+    font-weight: 700;
+}
+/* No need for section:nth-child(even) .tab-button.active as orange is fine on dark */
+
+.tab-content {
+    display: none;
+    padding-top: 20px;
+    animation: fadeIn var(--transition-speed) ease-in-out;
+}
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Skills section with tabs */
+.skills-content { /* Grid container for skill boxes within a tab */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 25px;
 }
-.skills-content div { /* Skill category box */
-    background: var(--white-color);
+.skill-category-box {
+    background: var(--background-light);
     padding: 25px;
     border-radius: 8px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.07);
     text-align: left;
 }
-.skills-content h3 {
-    color: var(--primary-color);
-    margin-bottom: 15px;
-    border-bottom: 2px solid var(--secondary-color);
+.skill-category-box h3 {
+    color: var(--primary-dark);
+    border-bottom: 2px solid var(--primary-orange);
     padding-bottom: 8px;
-    display: inline-block; /* To make border only span text width */
+    display: inline-block;
+    margin-bottom: 15px;
 }
-.skills-content p {
+.skill-category-box p {
     font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+section:nth-child(even) .skill-category-box { /* For dark sections */
+    background: #2c2c2c;
+}
+section:nth-child(even) .skill-category-box h3 {
+    color: var(--primary-orange);
+    border-bottom-color: var(--accent-orange-light);
 }
 
-/* --- Leadership and Awards Section --- */
+/* Leadership and Awards Section */
 .leadership-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 25px;
 }
 .leadership-item {
-    background: var(--white-color);
+    background: var(--background-light);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.05);
 }
 .leadership-item h4 {
-    color: var(--primary-color);
+    color: var(--primary-orange);
     margin-bottom: 10px;
     font-size: 1.2rem;
 }
@@ -398,91 +493,111 @@ h3 {
 }
 
 /* --- Contact Section --- */
-#contact {
+#contact { /* This will be an odd section, so it gets dark by default */
     text-align: center;
-    background-color: var(--dark-color); /* Dark background for contact */
-    color: var(--light-color);
-    max-width: none; /* Full width */
-    padding: 80px 20px;
+    max-width: none; /* Full width for dark background */
 }
-#contact h2 {
-    color: var(--white-color);
-}
-#contact h2::after {
-    background-color: var(--primary-color);
-}
-#contact p {
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-#contact a {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 600;
-}
-#contact a:hover {
-    color: var(--secondary-color);
-    text-decoration: underline;
-}
+/* Styles for h2, links, etc. within contact will be handled by section:nth-child(even) rules */
 #contact .social-links a {
-    font-size: 1.5rem; /* Larger icons */
+    font-size: 1.5rem;
     margin: 0 15px;
-    color: var(--light-color);
-    transition: color 0.3s ease, transform 0.3s ease;
+    transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
 }
 #contact .social-links a:hover {
-    color: var(--primary-color);
-    transform: scale(1.1);
+    /* Color handled by section:nth-child(even) a:hover */
+    transform: scale(1.15) rotate(5deg);
 }
 
 /* --- Footer --- */
 footer {
     text-align: center;
     padding: 25px 20px;
-    background: #1e272e; /* Even darker for footer */
-    color: var(--grey-color);
+    background: #000; /* Black footer */
+    color: #777;
     font-size: 0.9rem;
 }
+footer a {
+    color: var(--primary-orange);
+    text-decoration: none;
+}
+footer a:hover {
+    text-decoration: underline;
+}
 
-/* --- Responsive Adjustments --- */
+/* --- Mobile Navigation & Responsive Adjustments --- */
+.mobile-nav-toggle {
+    display: none;
+    background: transparent;
+    border: 0;
+    color: var(--text-light);
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 9999;
+}
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 @media (max-width: 768px) {
-    header {
-        padding: 0 15px; /* Adjust padding for smaller screens */
-    }
-    nav {
-        /* Basic mobile nav - for a real toggle menu, more JS/CSS needed */
-        flex-direction: column; /* Stack logo and menu items */
+    nav ul#primary-navigation {
+        position: fixed;
+        inset: 0 0 0 30%;
+        flex-direction: column;
         align-items: flex-start;
+        padding: min(20vh, 10rem) 2em;
+        gap: 1.5em;
+        background: rgba(26, 26, 26, 0.95); /* Semi-transparent dark for mobile nav */
+        backdrop-filter: blur(0.5rem);
+        -webkit-backdrop-filter: blur(0.5rem);
+        transform: translateX(100%);
+        transition: transform var(--transition-speed) ease-in-out;
     }
-    nav .logo {
-        margin-bottom: 10px; /* Space if stacking */
-        font-size: 1.4rem;
+
+    nav ul#primary-navigation[data-visible="true"] {
+        transform: translateX(0%);
     }
-    nav ul {
-        /* You would typically hide this and use a hamburger icon to toggle */
-        /* For now, let's make it wrap or reduce font size if too wide */
-        flex-wrap: wrap;
-        justify-content: center; /* Center items if they wrap */
-    }
+
     nav ul li {
-        margin: 5px 10px; /* Adjust margin for wrapped items */
+        margin-left: 0;
+        width: 100%;
     }
     nav ul li a {
-        font-size: 0.9rem;
-        padding: 6px 10px;
+        font-size: 1.2rem;
+        width: 100%;
+        display: block;
+    }
+    nav ul li a.resume-button {
+        text-align: center;
+        padding: 10px 15px;
     }
 
+    .mobile-nav-toggle {
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 1.5rem;
+        transform: translateY(-50%);
+    }
+
+    section {
+        padding: 60px 15px;
+    }
     h1 { font-size: 2.2rem; }
-    #hero h1 { font-size: 2.5rem; }
+    #hero h1 { font-size: 2.8rem; } /* Adjusted hero h1 for mobile */
     h2 { font-size: 2rem; }
     h3 { font-size: 1.5rem; }
 
     #hero {
-        min-height: auto; /* Adjust hero height for mobile */
-        padding: 60px 20px;
+        min-height: auto;
+        padding: 80px 20px; /* More padding for mobile hero */
     }
 
     #about .about-content {
@@ -496,6 +611,25 @@ footer {
     }
 
     .project-grid {
-        grid-template-columns: 1fr; /* Single column on mobile */
+        grid-template-columns: 1fr;
+    }
+
+    .tabs-container {
+        justify-content: flex-start;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .tabs-container::-webkit-scrollbar {
+        display: none;
+    }
+    .tab-button {
+        padding: 10px 15px;
+        font-size: 1rem;
+        flex-shrink: 0;
+    }
+    .skills-content { /* Grid container for skill boxes inside a tab */
+        grid-template-columns: 1fr; /* Stack skill boxes on mobile */
     }
 }
