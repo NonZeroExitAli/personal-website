@@ -139,7 +139,7 @@ section.visible {
     transform: translateY(0);
 }
 
-section:nth-child(even) { /* Even sections will have dark background */
+section:nth-child(even) { 
     background-color: var(--primary-dark);
     color: var(--text-light);
 }
@@ -169,7 +169,6 @@ section:nth-child(even) a:hover:not(.resume-button):not(.hero-links a):not(.proj
     color: var(--primary-orange);
 }
 
-
 h1, h2, h3, h4 {
     font-family: var(--font-primary);
     font-weight: 700;
@@ -193,7 +192,6 @@ h2::after {
     transform: translateX(-50%);
     background-color: var(--primary-orange);
 }
-
 
 /* --- Hero Section --- */
 #hero {
@@ -589,12 +587,13 @@ footer a:hover {
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
+    /* overflow: auto; -- Let .modal-content handle scroll */
     background-color: rgba(0,0,0,0.7);
     opacity: 0;
     transition: opacity var(--transition-speed) ease-in-out;
     align-items: center;
     justify-content: center;
+    padding: 20px; /* MODIFIED: Added padding to overlay */
 }
 
 .modal.show {
@@ -608,14 +607,16 @@ footer a:hover {
     padding: 25px;
     border: 1px solid var(--border-grey);
     border-top: 5px solid var(--primary-orange);
-    width: 80%;
-    max-width: 550px; /* MODIFIED */
+    width: 100%; /* MODIFIED: Use parent padding for edges */
+    max-width: 550px;
     border-radius: 8px;
     box-shadow: 0 5px 25px rgba(0,0,0,0.4);
     position: relative;
     transform: translateY(-30px) scale(0.98);
     opacity: 0;
     transition: transform calc(var(--transition-speed) * 1.2) ease-out, opacity calc(var(--transition-speed) * 1.2) ease-out;
+    max-height: 90vh; /* MODIFIED: Set a max height */
+    overflow-y: auto;   /* MODIFIED: Allow vertical scrolling within modal content */
 }
 
 .modal.show .modal-content {
@@ -649,7 +650,7 @@ footer a:hover {
     font-weight: 400;
 }
 .modal-achievement p {
-    font-size: 1rem; 
+    font-size: 1rem;
     line-height: 1.6;
     margin-bottom: 8px;
 }
@@ -660,14 +661,14 @@ footer a:hover {
     font-style: italic;
 }
 .modal-achievement p strong {
-    color: var(--accent-orange-light); 
+    color: var(--accent-orange-light);
     font-weight: 500;
 }
-.modal-achievement p.modal-achievement-link { /* ADDED */
+.modal-achievement p.modal-achievement-link {
     margin-top: 10px;
     text-align: center;
 }
-.modal-achievement p.modal-achievement-link a { /* ADDED */
+.modal-achievement p.modal-achievement-link a {
     display: inline-block;
     padding: 8px 15px;
     background-color: var(--primary-orange);
@@ -679,7 +680,7 @@ footer a:hover {
     border: 1px solid var(--primary-orange);
     transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
-.modal-achievement p.modal-achievement-link a:hover { /* ADDED */
+.modal-achievement p.modal-achievement-link a:hover {
     background-color: var(--accent-orange-light);
     color: var(--primary-dark);
 }
@@ -694,12 +695,18 @@ footer a:hover {
 
 .close-button {
     color: #aaa;
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 28px;
+    position: sticky; /* MODIFIED */
+    top: 10px;       /* MODIFIED */
+    /* right: 15px; -- removed, using float */
+    float: right;    /* MODIFIED */
+    font-size: 32px; /* MODIFIED */
     font-weight: bold;
     transition: color 0.3s ease;
+    z-index: 10;
+    line-height: 1;
+    padding: 0 5px; /* MODIFIED */
+    background-color: var(--primary-dark); /* MODIFIED */
+    border-radius: 50%; /* Optional */
 }
 
 .close-button:hover,
@@ -832,15 +839,22 @@ footer a:hover {
     }
 
     .modal-content { 
-        width: 90%;
-        padding: 20px;
-        max-width: 90%; 
+        max-height: 85vh; /* Ensure modal content respects viewport */
     }
     .modal-content h2 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+        margin-bottom: 20px;
     }
     .modal-achievement h3 {
         font-size: 1.1rem;
+    }
+    .modal-achievement p, .modal-achievement p.modal-achievement-detail { /* Consistent small text */
+        font-size: 0.9rem;
+    }
+    .close-button { /* Mobile close button adjustment */
+        top: 8px;
+        right: 10px;
+        font-size: 28px;
     }
 }
 
