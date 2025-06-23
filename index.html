@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ali Magdi Afifi Abdalhalim - Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Optional: Add Favicon -->
     <!-- <link rel="icon" href="images/favicon.ico" type="image/x-icon"> -->
 </head>
 <body>
@@ -14,7 +15,7 @@
             <div class="logo">Ali M. A. Abdalhalim</div>
             <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
                 <span class="sr-only">Menu</span>
-                ☰
+                ☰ <!-- Hamburger Icon -->
             </button>
             <ul id="primary-navigation" data-visible="false">
                 <li><a href="#hero" class="active">Home</a></li>
@@ -23,7 +24,7 @@
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#publications">Publications</a></li>
                 <li><a href="#skills">Skills</a></li>
-                <li><a href="#leadership-awards">Achievements</a></li> <!-- Renamed for clarity -->
+                <li><a href="#leadership-awards">Achievements</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="https://drive.google.com/file/d/1lHUn8pCAToP4MOZ-3WI5PSiIO7m-DOPd/view?usp=drive_link" target="_blank" class="resume-button">Resume</a></li>
             </ul>
@@ -48,7 +49,7 @@
         <section id="about">
             <h2>About Me</h2>
             <div class="about-content">
-                <img src="images/your_photo.jpg" alt="Ali Abdalhalim" class="profile-pic">
+                <img src="images/your_photo.jpg" alt="Ali Abdalhalim" class="profile-pic"> <!-- === REPLACE with your photo path === -->
                 <div class="about-text">
                     <p>I am a dedicated and results-oriented Bioinformatics and Computational Biology graduate from the University of Science and Technology at Zewail City (GPA: 3.37/4.0, Graduated: June 2025). My academic journey has equipped me with a strong foundation in Python, Machine Learning, Deep Learning, C++, and Data Structures.</p>
                     <p>My core interest lies in interdisciplinary research, exploring genomics and bioinformatics to understand marker genes, cell development trajectories, and disease mechanisms at the single-cell level, aiming to contribute to personalized medicine.</p>
@@ -91,6 +92,7 @@
                         <h3>Cyclic Peptide Sequencing Algorithms</h3>
                         <p class="project-date">May 2025</p>
                         <p>Course project for Foundations of Algorithms. Implements and compares three algorithms for cyclic peptide sequencing using theoretical mass spectrometry data.</p>
+                        <!-- <p><a href="[LINK_TO_GITHUB_OR_REPORT_FOR_THIS_PROJECT]" target="_blank" class="project-link">View Details</a></p> -->
                     </div>
                 </div>
                 <div class="project-card">
@@ -98,6 +100,7 @@
                         <h3>Motif Discovery Beyond Substrings (MoDisST)</h3>
                         <p class="project-date">May 2024</p>
                         <p>Course project for Data Structures. Investigating and utilizing suffix trees for advanced motif discovery in DNA and protein sequences.</p>
+                         <!-- <p><a href="[LINK_TO_GITHUB_OR_REPORT_FOR_THIS_PROJECT]" target="_blank" class="project-link">View Details</a></p> -->
                     </div>
                 </div>
                 <div class="project-card">
@@ -105,6 +108,7 @@
                         <h3>MoChAP: Modification of ChIP-seq Analysis Pipeline</h3>
                         <p class="project-date">November 2023</p>
                         <p>Course project for Programming for Computational Biology. Integration of advanced techniques in Python for enhanced peak identification, precise alignment, and motif analysis in ChIP-seq data.</p>
+                         <!-- <p><a href="[LINK_TO_GITHUB_OR_REPORT_FOR_THIS_PROJECT]" target="_blank" class="project-link">View Details</a></p> -->
                     </div>
                 </div>
                 <div class="project-card">
@@ -168,15 +172,15 @@
         </section>
 
          <!-- Leadership and Awards Section -->
-        <section id="leadership-awards"> <!-- ID REMAINS THE SAME -->
-            <h2>Leadership & Achievements</h2> <!-- UPDATED TITLE -->
+        <section id="leadership-awards">
+            <h2>Leadership & Achievements</h2>
             <div class="leadership-grid">
-                <div class="leadership-item awards-highlight"> <!-- ADDED class for styling and JS hook -->
+                <div class="leadership-item awards-highlight">
                     <h4>Key Achievements</h4>
                     <p><strong>ITAC-Funded Graduation Project (EPIC-AMP)</strong><br><em>Principal Researcher - May 2025</em><br>Secured competitive national funding for a high-impact research project tackling antimicrobial resistance through machine learning.</p>
                     <hr class="awards-divider">
                     <p><strong>1st Place - AppX'25 IEEE Zewail City (Bioinformatics Track)</strong><br><em>Project Owner, Presenter - February 2025</em><br>Developed and presented an innovative machine learning-based AMP prediction tool, winning 1st place among 42 teams.</p>
-                    <button class="btn-view-achievements" onclick="openAchievementsModal()">View Recent Achievements</button> <!-- Optional button -->
+                    <button class="btn-view-achievements" onclick="openAchievementsModal()">View Recent Achievements</button>
                 </div>
                 <div class="leadership-item">
                     <h4>Junior Teaching Assistant Roles (Zewail City)</h4>
