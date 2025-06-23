@@ -1,69 +1,76 @@
-// Smooth scrolling for navigation links
-document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            // Smooth scroll to target
-            window.scrollTo({
-                top: targetElement.offsetTop - 70, // Adjust for fixed header height
-                behavior: 'smooth'
-            });
+document.addEventListener('DOMContentLoaded', () => {
 
-            // Optional: Update active class on nav links
-            document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
-            this.classList.add('active');
-        }
+    // --- Smooth scrolling for navigation links ---
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    navLinks.forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - (document.querySelector('header')?.offsetHeight || 70), // Adjust for fixed header
+                    behavior: 'smooth'
+                });
+            }
+        });
     });
+
+    // --- Update current year in footer ---
+    const currentYearElement = document.getElementById('currentYear');
+    if (currentYearElement) {
+        currentYearElement.textContent = new Date().getFullYear();
+    }
+
+    // --- Scroll-triggered animations for sections ---
+    const sections = document.querySelectorAll("section");
+    const options = {
+        root: null, // relative to document viewport
+        rootMargin: '0px',
+        threshold: 0.1 // 10% of the element is visible
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                // Optional: unobserve after it's been animated once
+                // observer.unobserve(entry.target);
+            }
+            // Optional: remove class if you want animation to repeat when scrolling out and back in
+            // else {
+            //     entry.target.classList.remove("visible");
+            // }
+        });
+    }, options);
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+
+    // --- Active Navigation Link Highlighting on Scroll ---
+    const headerHeight = document.querySelector('header')?.offsetHeight || 70;
+    const sectionElements = document.querySelectorAll('main section[id]');
+
+    function updateActiveNavLink() {
+        let currentSectionId = '';
+        sectionElements.forEach(section => {
+            const sectionTop = section.offsetTop - headerHeight - 50; // Add a small offset
+            if (window.scrollY >= sectionTop) {
+                currentSectionId = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${currentSectionId}`) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', updateActiveNavLink);
+    updateActiveNavLink(); // Initial call to set active link on page load
+
 });
-
-// Update current year in footer
-document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-// Optional: Basic scroll animations (add a class when element is in view)
-// You might want a library like AOS (Animate on Scroll) for more complex animations
-const scrollElements = document.querySelectorAll("section"); // Or more specific elements
-
-const elementInView = (el, dividend = 1) => {
-  const elementTop = el.getBoundingClientRect().top;
-  return (
-    elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
-  );
-};
-
-const displayScrollElement = (element) => {
-  element.classList.add("scrolled"); // You'll define .scrolled styles in CSS
-};
-
-const hideScrollElement = (element) => {
-  element.classList.remove("scrolled");
-};
-
-const handleScrollAnimation = () => {
-  scrollElements.forEach((el) => {
-    if (elementInView(el, 1.25)) { // Adjust 1.25 for when animation triggers
-      displayScrollElement(el);
-    } // else { hideScrollElement(el); } // Optional: remove class when out of view
-  });
-};
-
-window.addEventListener("scroll", () => {
-  handleScrollAnimation();
-});
-
-// Initial check in case elements are already in view on load
-handleScrollAnimation();
-
-// Add this to your style.css for the basic scroll animation:
-/*
-section {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-section.scrolled {
-    opacity: 1;
-    transform: translateY(0);
-}
-*/
