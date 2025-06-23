@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetId = this.getAttribute('href');
 
             if (this.getAttribute('target') === '_blank') {
-                return; // Allow default behavior for _blank links (like resume)
+                return; 
             }
 
             if (targetId && targetId.startsWith('#')) {
@@ -187,7 +187,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Achievements Modal Functionality ---
     const achievementsModal = document.getElementById('achievementsModal');
-    // const closeButton = achievementsModal ? achievementsModal.querySelector('.close-button') : null; // Already handled by onclick in HTML
 
     window.openAchievementsModal = function() {
         if (achievementsModal) {
@@ -200,21 +199,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (achievementsModal) {
             achievementsModal.classList.remove('show');
             document.body.style.overflowY = 'auto';
-            // localStorage.setItem('achievementsModalShown', 'true'); // Optional: show only once
+            // localStorage.setItem('achievementsModalShown', 'true'); // Optional
         }
     }
 
-    // Close modal if user clicks outside of the modal-content
-    if (achievementsModal) {
+    if (achievementsModal) { // Check if modal exists before adding listener
         achievementsModal.addEventListener('click', function(event) {
-            if (event.target === achievementsModal) { // Clicked on the overlay
+            if (event.target === achievementsModal) {
                 closeAchievementsModal();
             }
         });
     }
 
+
     // Show modal on page load
-    // if (!localStorage.getItem('achievementsModalShown')) { // Optional: show only once
+    // if (!localStorage.getItem('achievementsModalShown')) { // Optional
     //     setTimeout(openAchievementsModal, 1500); 
     // }
      setTimeout(openAchievementsModal, 1500); // Remove this line and uncomment above for one-time show
