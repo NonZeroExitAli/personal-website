@@ -139,7 +139,7 @@ section.visible {
     transform: translateY(0);
 }
 
-section:nth-child(even) {
+section:nth-child(even) { /* Even sections will have dark background */
     background-color: var(--primary-dark);
     color: var(--text-light);
 }
@@ -160,7 +160,7 @@ section:nth-child(even) .leadership-item {
 section:nth-child(even) .project-card h3,
 section:nth-child(even) .skill-category-box h3,
 section:nth-child(even) .leadership-item h4 {
-    color: var(--primary-orange);
+    color: var(--primary-orange); /* Ensure specific titles remain orange on dark cards */
 }
 section:nth-child(even) a:not(.resume-button):not(.hero-links a):not(.project-link) {
     color: var(--accent-orange-light);
@@ -168,6 +168,7 @@ section:nth-child(even) a:not(.resume-button):not(.hero-links a):not(.project-li
 section:nth-child(even) a:hover:not(.resume-button):not(.hero-links a):not(.project-link) {
     color: var(--primary-orange);
 }
+
 
 h1, h2, h3, h4 {
     font-family: var(--font-primary);
@@ -178,7 +179,7 @@ h2 {
     font-size: 2.5rem;
     margin-bottom: 40px;
     text-align: center;
-    color: var(--primary-dark);
+    color: var(--primary-dark); /* Default for light backgrounds */
     position: relative;
     padding-bottom: 10px;
 }
@@ -192,12 +193,8 @@ h2::after {
     transform: translateX(-50%);
     background-color: var(--primary-orange);
 }
-section:nth-child(even) h2 {
-    color: var(--text-light);
-}
-section:nth-child(even) h2::after {
-    background-color: var(--primary-orange);
-}
+/* No specific :nth-child(even) for h2 here, it's covered by the general one above for dark sections */
+
 
 /* --- Hero Section --- */
 #hero {
@@ -212,8 +209,8 @@ section:nth-child(even) h2::after {
     padding: 40px 20px;
     margin: 0;
     max-width: none;
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1; /* Hero is always visible by default */
+    transform: translateY(0); /* No initial transform for hero animation */
 }
 
 #hero .hero-content {
@@ -288,7 +285,7 @@ section:nth-child(even) h2::after {
 
 /* Experience Section */
 .experience-item {
-    background: var(--background-light);
+    background: var(--background-light); /* Default for odd sections (light) */
     padding: 25px;
     margin-bottom: 25px;
     border-radius: 8px;
@@ -298,13 +295,11 @@ section:nth-child(even) h2::after {
 .experience-item .sub-heading {
     font-family: var(--font-primary);
     font-weight: 500;
-    color: var(--text-dark);
+    color: var(--text-dark); /* Default for light bg */
     margin-bottom: 10px;
     font-size: 1.1rem;
 }
-section:nth-child(even) .experience-item .sub-heading {
-    color: var(--text-light);
-}
+/* color for dark bg handled by section:nth-child(even) h3/h4 rule */
 .experience-item ul {
     list-style: none;
     padding-left: 0;
@@ -350,17 +345,18 @@ section:nth-child(even) .experience-item .sub-heading {
     flex-grow: 1;
 }
 .project-card h3 {
-    color: var(--primary-dark);
+    color: var(--primary-dark); /* Default for light card bg */
     margin-bottom: 10px;
     font-size: 1.4rem;
 }
+/* color for dark bg cards handled by section:nth-child(even) .project-card h3 */
 .project-card .project-date {
     font-size: 0.85em;
-    color: #777;
+    color: #777; /* For light card bg */
     margin-bottom: 15px;
     font-family: var(--font-secondary);
 }
-section:nth-child(even) .project-card .project-date {
+section:nth-child(even) .project-card .project-date { /* For dark card bg */
     color: #aaa;
 }
 .project-card p:not(.project-date) {
@@ -402,14 +398,14 @@ section:nth-child(even) .project-card .project-date {
     margin-bottom: 30px;
     display: flex;
     justify-content: center;
+}
+section:nth-child(odd) .tabs-container { /* section:nth-child(odd) is light section by default logic */
+    border-bottom: 2px solid #ddd; /* Lighter border for light bg */
+}
+section:nth-child(even) .tabs-container { /* section:nth-child(even) is dark section */
     border-bottom: 2px solid var(--border-grey);
 }
-section:nth-child(odd) .tabs-container { /* This means dark section in our scheme */
-    border-bottom-color: #555;
-}
-section:nth-child(even) .tabs-container { /* This means light section */
-    border-bottom-color: #ddd; /* Lighter border for light bg */
-}
+
 
 .tab-button {
     padding: 10px 20px;
@@ -419,12 +415,12 @@ section:nth-child(even) .tabs-container { /* This means light section */
     font-family: var(--font-primary);
     font-size: 1.1rem;
     font-weight: 500;
-    color: var(--text-dark);
+    color: var(--text-dark); /* Default for light section */
     transition: color var(--transition-speed) ease, border-bottom-color var(--transition-speed) ease;
     border-bottom: 3px solid transparent;
     margin-bottom: -2px;
 }
-section:nth-child(even) .tab-button { /* Dark section context */
+section:nth-child(even) .tab-button { /* Tab button in a dark section */
     color: var(--text-light);
 }
 
@@ -433,6 +429,8 @@ section:nth-child(even) .tab-button { /* Dark section context */
     border-bottom-color: var(--primary-orange);
     font-weight: 700;
 }
+/* No need for section:nth-child(even) .tab-button.active specific color, orange works on both */
+
 
 .tab-content {
     display: none;
@@ -454,14 +452,14 @@ section:nth-child(even) .tab-button { /* Dark section context */
     gap: 25px;
 }
 .skill-category-box {
-    background: var(--background-light);
+    background: var(--background-light); /* Default for light section */
     padding: 25px;
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.07);
     text-align: left;
 }
 .skill-category-box h3 {
-    color: var(--primary-dark);
+    color: var(--primary-dark); /* Default for light section */
     border-bottom: 2px solid var(--primary-orange);
     padding-bottom: 8px;
     display: inline-block;
@@ -471,13 +469,8 @@ section:nth-child(even) .tab-button { /* Dark section context */
     font-size: 0.95rem;
     margin-bottom: 10px;
 }
-section:nth-child(even) .skill-category-box {
-    background: #2c2c2c;
-}
-section:nth-child(even) .skill-category-box h3 {
-    color: var(--primary-orange);
-    border-bottom-color: var(--accent-orange-light);
-}
+/* Styles for skill-category-box in dark sections already handled by section:nth-child(even) .skill-category-box */
+
 
 /* Leadership and Awards Section */
 .leadership-grid {
@@ -486,19 +479,17 @@ section:nth-child(even) .skill-category-box h3 {
     gap: 25px;
 }
 .leadership-item {
-    background: var(--background-light);
+    background: var(--background-light); /* Default for light section */
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.05);
 }
 .leadership-item h4 {
-    color: var(--primary-orange); /* Orange for titles on light bg */
+    color: var(--primary-orange); /* Always orange for these titles */
     margin-bottom: 10px;
     font-size: 1.2rem;
 }
-section:nth-child(even) .leadership-item h4 { /* If section is dark */
-    color: var(--primary-orange); /* Stays orange, good contrast */
-}
+/* Background for dark section already handled by section:nth-child(even) .leadership-item */
 
 .leadership-item p {
     font-size: 0.9rem;
@@ -506,25 +497,23 @@ section:nth-child(even) .leadership-item h4 { /* If section is dark */
 }
 .leadership-item.awards-highlight {
     border: 2px solid var(--primary-orange);
-    /* Background handled by section:nth-child(even) or default */
 }
-section:nth-child(odd) .leadership-item.awards-highlight { /* If on a light section */
-     background-color: #f0f0f0; /* Slightly off-white to stand out */
+section:nth-child(odd) .leadership-item.awards-highlight { /* If on a light section (odd means light by our logic) */
+     background-color: #f0f0f0;
 }
-section:nth-child(even) .leadership-item.awards-highlight { /* If on a dark section */
-     background-color: #333; /* Slightly different dark to stand out */
+section:nth-child(even) .leadership-item.awards-highlight { /* If on a dark section (even means dark) */
+     background-color: #333;
 }
 
 .awards-divider {
     border: 0;
     height: 1px;
-    background-color: var(--border-grey);
+    background-color: #ccc; /* Default for light context */
     margin: 15px 0;
 }
-section:nth-child(odd) .awards-divider { /* Light section context */
-    background-color: #ccc;
+section:nth-child(even) .awards-divider { /* Dark section context */
+    background-color: var(--border-grey);
 }
-
 
 .btn-view-achievements {
     display: inline-block;
@@ -537,22 +526,26 @@ section:nth-child(odd) .awards-divider { /* Light section context */
     font-weight: 500;
     border: 2px solid var(--primary-orange);
     cursor: pointer;
-    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease;
     margin-top: 15px;
 }
-.btn-view-achievements:hover {
+.btn-view-achievements:hover { /* Default hover for light section context */
     background-color: var(--primary-dark);
     color: var(--primary-orange);
 }
-section:nth-child(even) .btn-view-achievements:hover { /* On dark background */
-    background-color: var(--text-light); /* Light button hover */
+section:nth-child(even) .btn-view-achievements { /* Button in dark section */
+    /* It inherits orange bg and dark text, which is fine */
+}
+section:nth-child(even) .btn-view-achievements:hover { /* Hover for button in dark section */
+    background-color: var(--text-light);
     color: var(--primary-dark);
     border-color: var(--text-light);
 }
 
 
 /* --- Contact Section --- */
-#contact { /* This is an odd section, so light by default. Let's make it dark explicitly */
+/* By default, contact is section:nth-child(odd), so it's light. To make it dark: */
+#contact {
     background-color: var(--primary-dark);
     color: var(--text-light);
     text-align: center;
@@ -609,31 +602,30 @@ footer a:hover {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.7); /* Darker overlay */
+    background-color: rgba(0,0,0,0.7);
     opacity: 0;
     transition: opacity var(--transition-speed) ease-in-out;
-    align-items: center; /* For flex centering */
-    justify-content: center; /* For flex centering */
+    align-items: center;
+    justify-content: center;
 }
 
 .modal.show {
-    display: flex; /* Changed from block to flex for centering */
+    display: flex;
     opacity: 1;
 }
 
 .modal-content {
     background-color: var(--primary-dark);
     color: var(--text-light);
-    /* margin: auto; */ /* No longer needed with flex on .modal */
-    padding: 30px;
+    padding: 25px; /* MODIFIED */
     border: 1px solid var(--border-grey);
     border-top: 5px solid var(--primary-orange);
     width: 80%;
-    max-width: 650px;
+    max-width: 550px; /* MODIFIED */
     border-radius: 8px;
     box-shadow: 0 5px 25px rgba(0,0,0,0.4);
     position: relative;
-    transform: translateY(-30px) scale(0.98); /* Slightly adjusted initial state */
+    transform: translateY(-30px) scale(0.98);
     opacity: 0;
     transition: transform calc(var(--transition-speed) * 1.2) ease-out, opacity calc(var(--transition-speed) * 1.2) ease-out;
 }
@@ -668,13 +660,20 @@ footer a:hover {
     margin-bottom: 10px;
     font-weight: 400;
 }
-.modal-achievement p {
-    font-size: 0.95rem;
+.modal-achievement p { /* MODIFIED */
+    font-size: 1rem; 
     line-height: 1.6;
     margin-bottom: 8px;
 }
-.modal-achievement p strong {
-    color: #e0e0e0;
+.modal-achievement p.modal-achievement-detail { /* ADDED */
+    font-size: 0.9rem;
+    color: #bbb;
+    margin-top: 5px;
+    font-style: italic;
+}
+.modal-achievement p strong { /* ADDED */
+    color: var(--accent-orange-light); 
+    font-weight: 500;
 }
 
 .modal-divider {
@@ -826,6 +825,7 @@ footer a:hover {
     .modal-content { /* Responsive modal */
         width: 90%;
         padding: 20px;
+        max-width: 90%; /* Ensure it doesn't get too wide on small tablets */
     }
     .modal-content h2 {
         font-size: 1.8rem;
