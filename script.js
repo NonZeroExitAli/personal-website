@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetId = this.getAttribute('href');
             if (this.getAttribute('target') === '_blank' && this.href.endsWith('.pdf')) {
                 window.open(this.href, '_blank');
-                e.preventDefault(); // Prevent default if it's the resume, but allow new tab
+                e.preventDefault(); 
                 return;
             }
 
@@ -44,19 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (entry.isIntersecting) {
                 entry.target.classList.add("visible");
             }
-            // else { // Optional: remove class to re-animate if scrolling up
-            //     if (entry.target.id !== 'hero') { // Don't remove from hero if it's always visible
-            //         entry.target.classList.remove("visible");
-            //     }
-            // }
         });
     }, sectionAnimationOptions);
 
     sectionsToAnimate.forEach(section => {
-        if (section.id !== 'hero') { // Hero is handled by CSS to be visible
+        if (section.id !== 'hero') {
             sectionObserver.observe(section);
         } else {
-            section.classList.add('visible'); // Ensure hero has class if not observed
+            section.classList.add('visible');
         }
     });
 
@@ -68,19 +63,16 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentSectionId = '';
         const scrollPosition = window.scrollY;
 
-        // Special handling for hero
         const heroSection = document.getElementById('hero');
         if (heroSection) {
-            // Consider hero active if less than, say, 70% of its height is scrolled past
             if (scrollPosition < heroSection.offsetTop + heroSection.offsetHeight * 0.7 - headerHeightForNav) {
                 currentSectionId = 'hero';
             }
         }
         
-        // If not hero, iterate through other sections
         if (!currentSectionId) {
             sectionElementsForNav.forEach(section => {
-                const sectionTop = section.offsetTop - headerHeightForNav - 50; // Offset for better accuracy
+                const sectionTop = section.offsetTop - headerHeightForNav - 50;
                 const sectionBottom = sectionTop + section.offsetHeight;
                 if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
                     currentSectionId = section.getAttribute('id');
@@ -88,12 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         
-        // If no section is "current" (e.g., at the very bottom past all sections),
-        // keep the last one active or default to contact.
-        if (!currentSectionId && sectionElementsForNav.length > 0 && scrollPosition + window.innerHeight >= document.body.offsetHeight - 50) { // Near bottom
+        if (!currentSectionId && sectionElementsForNav.length > 0 && scrollPosition + window.innerHeight >= document.body.offsetHeight - 50) {
             currentSectionId = sectionElementsForNav[sectionElementsForNav.length -1].id;
         }
-
 
         navLinks.forEach(link => {
             link.classList.remove('active');
@@ -104,39 +93,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('scroll', updateActiveNavLink);
-    updateActiveNavLink(); // Initial call
+    updateActiveNavLink();
 
     // --- Tabs Functionality ---
     window.openTab = function(event, tabName) {
         let i, tabcontent, tabbuttons;
-        const parentSection = event.currentTarget.closest('section'); // Find parent section of clicked tab
+        const parentSection = event.currentTarget.closest('section');
 
-        // Hide all tab content within the same parent section
         tabcontent = parentSection.getElementsByClassName("tab-content");
         for (i = 0; i < tabcontent.length; i++) {
             tabcontent[i].style.display = "none";
             tabcontent[i].classList.remove("active");
         }
 
-        // Remove active class from all tab buttons within the same tabs-container
         tabbuttons = event.currentTarget.closest('.tabs-container').getElementsByClassName("tab-button");
         for (i = 0; i < tabbuttons.length; i++) {
             tabbuttons[i].classList.remove("active");
         }
 
-        // Show the current tab content and set active class on button
         const currentTabContent = document.getElementById(tabName);
         if (currentTabContent) {
             currentTabContent.style.display = "block";
             setTimeout(() => {
                 currentTabContent.classList.add("active");
-            }, 10); // Timeout for CSS transition
+            }, 10);
         }
         if (event.currentTarget) {
             event.currentTarget.classList.add("active");
         }
     }
-    // Initialize first active tabs defined in HTML
     document.querySelectorAll('.tabs-container').forEach(container => {
         const firstActiveButton = container.querySelector('.tab-button.active');
         if (firstActiveButton) {
@@ -159,12 +144,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (visibility === "false") {
                 primaryNav.setAttribute('data-visible', true);
                 navToggle.setAttribute('aria-expanded', true);
-                navToggle.innerHTML = '×'; // Close icon
+                navToggle.innerHTML = '×';
                 document.body.style.overflowY = 'hidden';
             } else {
                 primaryNav.setAttribute('data-visible', false);
                 navToggle.setAttribute('aria-expanded', false);
-                navToggle.innerHTML = '☰'; // Hamburger icon
+                navToggle.innerHTML = '☰';
                 document.body.style.overflowY = 'auto';
             }
         });
