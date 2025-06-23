@@ -1,42 +1,66 @@
-/* Basic Reset & Body Styling */
+/* --- Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap');
+
+/* --- CSS Variables (Color Palette & Fonts) --- */
+:root {
+    --primary-color: #3498db; /* A nice, modern blue */
+    --secondary-color: #2ecc71; /* A vibrant green for accents/CTA */
+    --dark-color: #2c3e50;    /* Dark blue/grey for text */
+    --light-color: #ecf0f1;   /* Light grey for backgrounds */
+    --white-color: #ffffff;
+    --grey-color: #bdc3c7;    /* A softer grey */
+
+    --font-primary: 'Montserrat', sans-serif;
+    --font-secondary: 'Open Sans', sans-serif;
+
+    --header-height: 70px; /* Define header height for offsets */
+}
+
+/* --- Basic Reset & Body Styling --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    scroll-behavior: smooth; /* For smooth scrolling with nav links */
+    scroll-behavior: smooth;
 }
 
 body {
-    font-family: 'Arial', sans-serif; /* Choose a nice font later */
-    line-height: 1.6;
-    color: #333;
-    background-color: #f4f4f4; /* Light gray background */
+    font-family: var(--font-secondary);
+    line-height: 1.7;
+    color: var(--dark-color);
+    background-color: var(--light-color);
+    overflow-x: hidden; /* Prevent horizontal scrollbars from animations */
 }
 
-/* Header & Navigation */
+/* --- Header & Navigation --- */
 header {
-    background: #333; /* Dark header background */
-    color: #fff;
-    padding: 1rem 0;
-    position: fixed; /* Sticky header */
+    background: var(--dark-color);
+    color: var(--white-color);
+    padding: 0 20px; /* Reduced vertical padding */
+    height: var(--header-height);
+    position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    display: flex; /* Use flex for vertical alignment */
+    align-items: center; /* Vertically center nav content */
 }
 
 nav {
     max-width: 1100px;
+    width: 100%;
     margin: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
 }
 
 nav .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-family: var(--font-primary);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--primary-color); /* Logo with primary color */
 }
 
 nav ul {
@@ -45,255 +69,433 @@ nav ul {
 }
 
 nav ul li {
-    margin-left: 20px;
+    margin-left: 25px; /* Increased spacing */
 }
 
 nav ul li a {
-    color: #fff;
+    color: var(--light-color); /* Lighter text for contrast */
     text-decoration: none;
-    padding: 5px 10px;
-    transition: background-color 0.3s ease;
+    font-family: var(--font-primary);
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative; /* For underline effect */
 }
 
-nav ul li a:hover, nav ul li a.active {
-    background-color: #555; /* Slightly lighter on hover/active */
-    border-radius: 4px;
+nav ul li a::after { /* Underline effect */
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after,
+nav ul li a.active::after {
+    width: 70%; /* Active/hover underline width */
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    color: var(--white-color); /* Brighter on hover/active */
 }
 
 nav ul li a.resume-button {
-    background-color: #007bff; /* A distinct color for the resume button */
-    border-radius: 4px;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border: 2px solid var(--primary-color);
 }
 nav ul li a.resume-button:hover {
-    background-color: #0056b3;
+    background-color: var(--white-color);
+    color: var(--primary-color);
 }
 
 
-/* Main Content & Sections */
+/* --- Main Content & Sections --- */
 main {
-    padding-top: 80px; /* Adjust based on header height */
+    padding-top: var(--header-height); /* Offset for fixed header */
 }
 
 section {
-    padding: 60px 20px;
+    padding: 80px 20px;
     max-width: 1000px;
-    margin: auto;
-    border-bottom: 1px solid #ddd; /* Separator between sections */
+    margin: 0 auto; /* Center sections */
+    /* Base styles for scroll animation */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.8s ease-out;
 }
-section:last-child{
-    border-bottom: none;
+section.visible { /* Class added by JS when section is in view */
+    opacity: 1;
+    transform: translateY(0);
+}
+
+section:nth-child(even) { /* Alternate section backgrounds */
+    background-color: var(--white-color);
+}
+
+
+h1, h2, h3, h4 {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    color: var(--dark-color);
 }
 
 h1 {
-    font-size: 2.8rem;
-    margin-bottom: 10px;
-    color: #333; /* Darker heading color */
+    font-size: 3rem;
+    margin-bottom: 15px;
+    line-height: 1.2;
 }
 
 h2 {
-    font-size: 2.2rem;
-    margin-bottom: 30px;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
     text-align: center;
-    color: #0056b3; /* Primary color for section titles */
+    color: var(--primary-color); /* Section titles with primary color */
+    position: relative;
+    padding-bottom: 10px;
+}
+h2::after { /* Underline for section titles */
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 3px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--secondary-color);
 }
 
-/* Hero Section */
+h3 {
+    font-size: 1.8rem;
+    color: var(--dark-color);
+    margin-bottom: 15px;
+}
+
+/* --- Hero Section --- */
 #hero {
-    background: #e9ecef; /* Slightly different background for hero */
-    text-align: center;
-    min-height: 80vh; /* Make it take most of the screen height */
+    background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.85)), url('https://via.placeholder.com/1920x1080.png?text=Bioinformatics+Background') no-repeat center center/cover; /* Replace with a real background image! */
+    color: var(--white-color);
+    min-height: calc(100vh - var(--header-height));
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    padding: 20px; /* Ensure padding inside */
+    margin: 0; /* Remove default section margin if any */
+    max-width: none; /* Hero spans full width */
+}
+#hero h1 {
+    color: var(--white-color);
+    font-size: 3.5rem;
 }
 .hero-content .tagline {
-    font-size: 1.4rem;
-    color: #555;
-    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-family: var(--font-secondary);
+    font-weight: 400;
+    color: var(--light-color);
+    margin-bottom: 25px;
+}
+.hero-content > p:not(.tagline) { /* The description paragraph */
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin-bottom: 30px;
+    color: var(--grey-color);
 }
 .hero-links a {
     display: inline-block;
     margin: 10px;
-    padding: 10px 20px;
-    background: #007bff;
+    padding: 12px 25px;
+    background: var(--primary-color);
     color: white;
     text-decoration: none;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
+    font-family: var(--font-primary);
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: 2px solid var(--primary-color);
 }
 .hero-links a:hover {
-    background: #0056b3;
+    background: var(--white-color);
+    color: var(--primary-color);
+    transform: translateY(-3px);
 }
 
 
-/* About Section */
+/* --- About Section --- */
 #about .about-content {
     display: flex;
-    align-items: flex-start; /* Align items to the top */
-    gap: 30px; /* Space between image and text */
+    align-items: center;
+    gap: 40px;
 }
 #about .profile-pic {
-    width: 150px; /* Adjust as needed */
-    height: 150px;
-    border-radius: 50%; /* Circular image */
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #0056b3;
+    border: 5px solid var(--primary-color);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+#about .about-text p {
+    margin-bottom: 15px;
+    font-size: 1.05rem;
 }
 
-
-/* Experience Section */
+/* --- Experience Section --- */
 .experience-item {
-    background: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    background: var(--white-color); /* Ensure contrast if section has light bg */
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    border-left: 5px solid var(--secondary-color); /* Accent border */
 }
 .experience-item .sub-heading {
-    font-weight: bold;
-    color: #555;
+    font-family: var(--font-primary);
+    font-weight: 500;
+    color: var(--dark-color);
     margin-bottom: 10px;
+    font-size: 1.1rem;
 }
 .experience-item ul {
-    list-style-position: inside;
-    margin-left: 10px;
+    list-style: none; /* Remove default bullets */
+    padding-left: 0;
+}
+.experience-item ul li {
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 8px;
+}
+.experience-item ul li::before { /* Custom bullet */
+    content: '›'; /* Or '•', '✓' etc. */
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.2em;
+    line-height: 1;
 }
 
-/* Projects Section */
+/* --- Projects Section --- */
 .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
 }
 
 .project-card {
-    background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    background: var(--white-color);
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+    overflow: hidden; /* For image if added */
+    display: flex;
+    flex-direction: column; /* Ensure footer is at bottom */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(44, 62, 80, 0.15);
+}
+.project-card-content { /* New div to wrap text content for padding */
+    padding: 25px;
+    flex-grow: 1; /* Allow content to grow */
 }
 .project-card h3 {
-    color: #007bff;
+    color: var(--primary-color);
     margin-bottom: 10px;
+    font-size: 1.4rem;
 }
 .project-card .project-date {
-    font-size: 0.9em;
+    font-size: 0.85em;
     color: #777;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    font-family: var(--font-secondary);
+}
+.project-card p:not(.project-date) {
+    margin-bottom: 15px;
+    font-size: 0.95rem;
 }
 .project-card .project-link {
     display: inline-block;
-    margin-top: 10px;
-    color: #007bff;
+    margin-top: auto; /* Push to bottom if card content varies */
+    padding: 10px 15px; /* Added to make it look like a button */
+    background-color: var(--secondary-color);
+    color: var(--white-color);
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 500;
+    font-family: var(--font-primary);
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 .project-card .project-link:hover {
-    text-decoration: underline;
+    background-color: #27ae60; /* Darker shade of secondary */
 }
 
-/* Publications Section */
+
+/* --- Publications Section --- */
 .publication-item {
-    background: #fff;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    background: var(--white-color);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    border-left: 4px solid var(--primary-color);
+}
+.publication-item p {
+    font-size: 1rem;
 }
 
-/* Skills Section */
+/* --- Skills Section --- */
 .skills-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    text-align: center;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
 }
-.skills-content div {
-    background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+.skills-content div { /* Skill category box */
+    background: var(--white-color);
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    text-align: left;
 }
 .skills-content h3 {
-    color: #007bff;
-    margin-bottom: 10px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 8px;
+    display: inline-block; /* To make border only span text width */
+}
+.skills-content p {
+    font-size: 0.95rem;
 }
 
-/* Leadership and Awards Section */
+/* --- Leadership and Awards Section --- */
 .leadership-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    gap: 25px;
 }
 .leadership-item {
-    background: #fff;
+    background: var(--white-color);
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
 }
 .leadership-item h4 {
-    color: #007bff;
-    margin-bottom: 8px;
-}
-
-/* Contact Section */
-#contact {
-    text-align: center;
-}
-#contact .social-links a {
-    display: inline-block;
-    margin: 0 10px;
-    color: #007bff;
-    text-decoration: none;
+    color: var(--primary-color);
+    margin-bottom: 10px;
     font-size: 1.2rem;
 }
-#contact .social-links a:hover {
+.leadership-item p {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+/* --- Contact Section --- */
+#contact {
+    text-align: center;
+    background-color: var(--dark-color); /* Dark background for contact */
+    color: var(--light-color);
+    max-width: none; /* Full width */
+    padding: 80px 20px;
+}
+#contact h2 {
+    color: var(--white-color);
+}
+#contact h2::after {
+    background-color: var(--primary-color);
+}
+#contact p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#contact a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+#contact a:hover {
+    color: var(--secondary-color);
     text-decoration: underline;
 }
+#contact .social-links a {
+    font-size: 1.5rem; /* Larger icons */
+    margin: 0 15px;
+    color: var(--light-color);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+#contact .social-links a:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
 
-
-/* Footer */
+/* --- Footer --- */
 footer {
     text-align: center;
-    padding: 20px;
-    background: #333;
-    color: #fff;
-    margin-top: 30px;
+    padding: 25px 20px;
+    background: #1e272e; /* Even darker for footer */
+    color: var(--grey-color);
+    font-size: 0.9rem;
 }
 
-/* Basic Transitions - you'll add more specific ones */
-a, button {
-    transition: all 0.3s ease;
-}
-
-/* Responsive adjustments - very basic, expand as needed */
+/* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
+    header {
+        padding: 0 15px; /* Adjust padding for smaller screens */
+    }
+    nav {
+        /* Basic mobile nav - for a real toggle menu, more JS/CSS needed */
+        flex-direction: column; /* Stack logo and menu items */
+        align-items: flex-start;
+    }
+    nav .logo {
+        margin-bottom: 10px; /* Space if stacking */
+        font-size: 1.4rem;
+    }
     nav ul {
-        flex-direction: column;
-        align-items: center;
-        display: none; /* Hide for now, you'll need JS for a toggle menu */
+        /* You would typically hide this and use a hamburger icon to toggle */
+        /* For now, let's make it wrap or reduce font size if too wide */
+        flex-wrap: wrap;
+        justify-content: center; /* Center items if they wrap */
     }
     nav ul li {
-        margin: 10px 0;
+        margin: 5px 10px; /* Adjust margin for wrapped items */
     }
-    .hero-content h1 {
-        font-size: 2rem;
+    nav ul li a {
+        font-size: 0.9rem;
+        padding: 6px 10px;
     }
-    .hero-content .tagline {
-        font-size: 1.1rem;
+
+    h1 { font-size: 2.2rem; }
+    #hero h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.5rem; }
+
+    #hero {
+        min-height: auto; /* Adjust hero height for mobile */
+        padding: 60px 20px;
     }
+
     #about .about-content {
         flex-direction: column;
-        align-items: center;
         text-align: center;
     }
     #about .profile-pic {
+        width: 150px;
+        height: 150px;
         margin-bottom: 20px;
+    }
+
+    .project-grid {
+        grid-template-columns: 1fr; /* Single column on mobile */
     }
 }
