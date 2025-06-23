@@ -203,12 +203,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    if (achievementsModal) { // Check if modal exists before adding listener
+    if (achievementsModal) { 
         achievementsModal.addEventListener('click', function(event) {
             if (event.target === achievementsModal) {
                 closeAchievementsModal();
             }
         });
+        // Note: The close button (X) already has onclick in HTML
     }
 
 
